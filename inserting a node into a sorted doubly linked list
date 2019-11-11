@@ -1,0 +1,107 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+class DoublyLinkedListNode:
+    def __init__(self, node_data):
+        self.data = node_data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def insert_node(self, node_data):
+        node = DoublyLinkedListNode(node_data)
+
+        if not self.head:
+            self.head = node
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+
+
+        self.tail = node
+
+def print_doubly_linked_list(node, sep, fptr):
+    while node:
+        fptr.write(str(node.data))
+
+        node = node.next
+
+        if node:
+            fptr.write(sep)
+
+# Complete the sortedInsert function below.
+
+#
+# For your reference:
+#
+# DoublyLinkedListNode:
+#     int data
+#     DoublyLinkedListNode next
+#     DoublyLinkedListNode prev
+#
+#
+def sortedInsert(head, data):
+    ptr=DoublyLinkedListNode
+    ptr1=DoublyLinkedListNode
+    temp=DoublyLinkedListNode
+    temp.data=data
+    temp.next=None
+    temp.prev=None
+    cou=llist_count-1
+    if head==None:
+        head=temp
+    else:
+        ptr=head
+        while ptr.data<data :
+            cou-=1
+            if cou<0:
+                ptr.next=temp
+                temp.prev=ptr
+                temp.next=None
+                return head
+            else:
+                ptr1=ptr
+                ptr=ptr.next
+            
+        if ptr==head:
+            temp.next=ptr
+            ptr.prev=temp
+            temp.prev=None
+            head=temp
+        else:
+            ptr1.next=temp
+            temp.prev=ptr1
+            temp.next=ptr
+            ptr.prev=temp
+    return head        
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input())
+
+    for t_itr in range(t):
+        llist_count = int(input())
+
+        llist = DoublyLinkedList()
+
+        for _ in range(llist_count):
+            llist_item = int(input())
+            llist.insert_node(llist_item)
+
+        data = int(input())
+
+        llist1 = sortedInsert(llist.head, data)
+
+        print_doubly_linked_list(llist1, ' ', fptr)
+        fptr.write('\n')
+
+    fptr.close()
